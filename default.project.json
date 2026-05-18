@@ -1,0 +1,27 @@
+{
+  "name": "RobloxTagSystem",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "TagConfig": {
+        "$path": "src/ReplicatedStorage/TagConfig.lua"
+      }
+    },
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "TagSystem": {
+        "$path": "src/ServerScriptService/TagSystem"
+      }
+    },
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "StarterPlayerScripts": {
+        "$className": "StarterPlayerScripts",
+        "TagClient": {
+          "$path": "src/StarterPlayer/StarterPlayerScripts/TagClient.client.lua"
+        }
+      }
+    }
+  }
+}
