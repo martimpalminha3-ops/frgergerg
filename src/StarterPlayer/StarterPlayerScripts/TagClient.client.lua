@@ -14,8 +14,37 @@ local TweenService      = game:GetService("TweenService")
 local TagConfig = require(ReplicatedStorage:WaitForChild("TagConfig"))
 local tagEvent  = ReplicatedStorage:WaitForChild("TagSystemEvent")
 
+local RunService = game:GetService("RunService")
+
 local localPlayer = Players.LocalPlayer
 local appearance  = TagConfig.Appearance
+
+-- Armazenar conexões rainbow ativas para limpeza
+local rainbowConnections = {}
+
+-- ============================================================
+-- RAINBOW (ARCO-ÍRIS) - Ciclo de cores suave
+-- ============================================================
+
+local function hsvToRgb(h: number, s: number, v: number): Color3
+    return Color3.fromHSV(h % 1, s, v)
+end
+
+local function startRainbow(frame, stroke)
+    local connection
+    connection = RunService.Heartbeat:Connect(function()
+        if not frame or not frame.Parent then
+            connection:Disconnect()
+            return
+        end
+        local hue = (tick() * 0.5) % 1
+        frame.BackgroundColor3 = hsvToRgb(hue, 1, 1)
+        if stroke then
+            stroke.Color = hsvToRgb((hue + 0.5) % 1, 1, 0.8)
+        end
+    end)
+    return connection
+end
 
 -- ============================================================
 -- CRIAR BILLBOARD GUI
@@ -124,6 +153,25 @@ local function createTagBillboard(character, tagName: string, tagData)
     frameTween:Play()
     billboardTween:Play()
 
+    -- Ativar animação rainbow se a tag tiver Rainbow = true
+    if tagData.Rainbow then
+        local playerId = character.Parent and character.Parent:IsA("Player") and character.Parent.UserId
+        if not playerId then
+            local player = Players:GetPlayerFromCharacter(character)
+            if player then
+                playerId = player.UserId
+            end
+        end
+
+        local conn = startRainbow(frame, stroke)
+        if playerId then
+            if rainbowConnections[playerId] then
+                rainbowConnections[playerId]:Disconnect()
+            end
+            rainbowConnections[playerId] = conn
+        end
+    end
+
     return billboard
 end
 
@@ -143,6 +191,13 @@ local function removeTag(character)
 
     local billboard = head:FindFirstChild("TagBillboard")
     if billboard then
+        -- Parar rainbow se existir
+        local player = Players:GetPlayerFromCharacter(character)
+        if player and rainbowConnections[player.UserId] then
+            rainbowConnections[player.UserId]:Disconnect()
+            rainbowConnections[player.UserId] = nil
+        end
+
         -- Animação de saída
         local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
         local tween = TweenService:Create(billboard, tweenInfo, {

@@ -122,11 +122,11 @@ TagConfig.Appearance = {
 
 | Tag       | Cor                | Emoji | Prioridade |
 |-----------|-------------------|-------|------------|
-| Owner     | 🟡 Dourado        | 👑    | 1 (máxima) |
+| Owner     | 🔴 Vermelho       | 👑    | 1 (máxima) |
 | Co-Owner  | ⚪ Prateado       | ⚜️    | 2          |
 | Staff     | 🔵 Azul           | 🛡️    | 3          |
 | Dev       | 🟢 Verde          | 💻    | 4          |
-| VIP       | 🟣 Rosa/Roxo      | ⭐    | 5          |
+| VIP       | 🌈 Rainbow        | ⭐    | 5          |
 
 ---
 

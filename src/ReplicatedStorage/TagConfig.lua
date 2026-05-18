@@ -17,8 +17,8 @@ local TagConfig = {}
 TagConfig.Tags = {
     Owner = {
         DisplayName = "👑 Owner",
-        Color       = Color3.fromRGB(255, 215, 0),   -- Dourado
-        TextColor   = Color3.fromRGB(0, 0, 0),        -- Preto
+        Color       = Color3.fromRGB(220, 20, 20),    -- Vermelho
+        TextColor   = Color3.fromRGB(255, 255, 255),   -- Branco
         Priority    = 1,
         UserIds     = {
             -- Coloca aqui os UserIds dos Owners
@@ -52,9 +52,10 @@ TagConfig.Tags = {
 
     VIP = {
         DisplayName = "⭐ VIP",
-        Color       = Color3.fromRGB(255, 85, 255),   -- Rosa/Roxo
+        Color       = Color3.fromRGB(255, 0, 0),      -- Base (animado rainbow)
         TextColor   = Color3.fromRGB(255, 255, 255),
         Priority    = 5,
+        Rainbow     = true,
         UserIds     = {},
     },
 }
